@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/create_screen.dart';
 import 'package:todo_list/todo.dart';
+import 'package:todo_list/todo_item.dart';
 
 import 'main.dart';
 
@@ -12,8 +13,6 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +21,27 @@ class _ListScreenState extends State<ListScreen> {
       ),
       body: ListView(
         children: todos.values.map((e) {
-          return ListTile(
-            title:Text(e.title),
-            subtitle: Text('${e.dateTime}')
+          return TodoItem(
+            todo: e,
+            onTap: (Todo todo) async {
+              todo.isDone = !todo.isDone;
+              await todo.save();
+
+              setState(() {
+
+              });
+            },
           );
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.push(
-              context,
-              MaterialPageRoute(builder:
-              (context) => const CreateScreen()),
+            context,
+            MaterialPageRoute(builder: (context) => const CreateScreen()),
           );
 
-          setState(() {
-
-          });
+          setState(() {});
         },
         child: Icon(Icons.add),
       ),
