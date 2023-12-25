@@ -25,7 +25,16 @@ class _ListScreenState extends State<ListScreen> {
             todo: e,
             onTap: (Todo todo) async {
               todo.isDone = !todo.isDone;
+              //db에 저장
               await todo.save();
+
+              setState(() {
+
+              });
+            },
+            onDelete: (Todo todo) async{
+              // db에서 제거
+              await todo.delete();
 
               setState(() {
 
